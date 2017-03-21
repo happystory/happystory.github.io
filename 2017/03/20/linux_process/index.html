@@ -1,0 +1,740 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="进程进程是正在执行的一个程序或命令，每个进程都是一个运行的实体，都有自己的地址空间，并占用一定的系统资源。主要作用：判断系统是否健康；查看进程；杀死进程。
+进程查看命令ps
+ps aux 查看系统中所有进程，使用BSD操作系统格式
+ps -le 查看系统中所有进程，使用Linux标准命令格式
+
+12345678910111213141516USER: 该进程是由哪个用户产生的PID: 进程的ID号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习之进程管理">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/linux_process/index.html">
+<meta property="og:site_name" content="LiuYao's Notes">
+<meta property="og:description" content="进程进程是正在执行的一个程序或命令，每个进程都是一个运行的实体，都有自己的地址空间，并占用一定的系统资源。主要作用：判断系统是否健康；查看进程；杀死进程。
+进程查看命令ps
+ps aux 查看系统中所有进程，使用BSD操作系统格式
+ps -le 查看系统中所有进程，使用Linux标准命令格式
+
+12345678910111213141516USER: 该进程是由哪个用户产生的PID: 进程的ID号">
+<meta property="og:updated_time" content="2017-03-20T14:59:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux学习之进程管理">
+<meta name="twitter:description" content="进程进程是正在执行的一个程序或命令，每个进程都是一个运行的实体，都有自己的地址空间，并占用一定的系统资源。主要作用：判断系统是否健康；查看进程；杀死进程。
+进程查看命令ps
+ps aux 查看系统中所有进程，使用BSD操作系统格式
+ps -le 查看系统中所有进程，使用Linux标准命令格式
+
+12345678910111213141516USER: 该进程是由哪个用户产生的PID: 进程的ID号">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/linux_process/"/>
+
+
+
+
+
+  <title> Linux学习之进程管理 | LiuYao's Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LiuYao's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Quick notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/linux_process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuYao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuYao's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux学习之进程管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T20:09:29+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>进程是正在执行的一个程序或命令，每个进程都是一个运行的实体，都有自己的地址空间，并占用一定的系统资源。<br>主要作用：判断系统是否健康；查看进程；杀死进程。</p>
+<h2 id="进程查看命令ps"><a href="#进程查看命令ps" class="headerlink" title="进程查看命令ps"></a>进程查看命令ps</h2><ul>
+<li><code>ps aux</code> 查看系统中所有进程，使用BSD操作系统格式</li>
+<li><code>ps -le</code> 查看系统中所有进程，使用Linux标准命令格式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">USER: 该进程是由哪个用户产生的</div><div class="line">PID: 进程的ID号</div><div class="line">%CPU: 该进程占用CPU资源的百分比</div><div class="line">%MEM: 该进程占用物理内存的百分比</div><div class="line">VSZ: 该进程占用虚拟内存的大小，单位KB</div><div class="line">RSS: 该进程占用实际物理内存的大小，单位KB</div><div class="line">TTY: 该进程是在哪个终端运行的</div><div class="line">STAT: 进程状态</div><div class="line">    R: 运行</div><div class="line">    S: 休眠</div><div class="line">    T: 停止</div><div class="line">    s: 包含子进程</div><div class="line">    +: 位于后台</div><div class="line">START: 该进程的启动时间</div><div class="line">TIME: 该进程的CPU的运算时间</div><div class="line">COMMAND: 产生此进程的命令名</div></pre></td></tr></table></figure>
+<h2 id="进程查看命令pstree"><a href="#进程查看命令pstree" class="headerlink" title="进程查看命令pstree"></a>进程查看命令pstree</h2><ul>
+<li>-p: 显示进程的PID</li>
+<li>-u: 显示进程的所属用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# pstree</div><div class="line">init─┬─auditd───&#123;auditd&#125;</div><div class="line">     ├─crond</div><div class="line">     ├─dbus-daemon───&#123;dbus-daemon&#125;</div><div class="line">     ├─dhclient</div><div class="line">     ├─master─┬─pickup</div><div class="line">     │        └─qmgr</div><div class="line">     ├─6*[mingetty]</div><div class="line">     ├─mysqld_safe───mysqld───9*[&#123;mysqld&#125;]</div><div class="line">     ├─portreserve</div><div class="line">     ├─rsyslogd───3*[&#123;rsyslogd&#125;]</div><div class="line">     ├─sshd───sshd───bash───pstree</div><div class="line">     └─udevd───2*[udevd]</div></pre></td></tr></table></figure>
+<h2 id="进程查看命令top"><a href="#进程查看命令top" class="headerlink" title="进程查看命令top"></a>进程查看命令top</h2><ul>
+<li>-d 秒数：指定每隔几秒更新，默认是3秒</li>
+<li>-b: 使用批处理模式输出（一般与”-n”选项合用）</li>
+<li>-n 次数：指定命令执行的次数</li>
+</ul>
+<p>在top命令的交互模式当中可以执行的命令：</p>
+<ul>
+<li>?或h: 显示交互模式的帮助</li>
+<li>P: 以CPU使用率排序，默认就是此项</li>
+<li>M: 以内存的使用率排序</li>
+<li>N: 以PID排序</li>
+<li>q: 退出top</li>
+</ul>
+<h2 id="杀死进程命令kill"><a href="#杀死进程命令kill" class="headerlink" title="杀死进程命令kill"></a>杀死进程命令kill</h2><p><code>kill -l</code> 查看信号</p>
+<ul>
+<li>kill -1(-HUP) <pid> 平滑重启</pid></li>
+<li>kill -9 <pid> 强制中止</pid></li>
+<li>kill -15 <pid> 默认</pid></li>
+</ul>
+<h2 id="杀死进程命令killall"><a href="#杀死进程命令killall" class="headerlink" title="杀死进程命令killall"></a>杀死进程命令killall</h2><p>killall [选项][信号]进程名</p>
+<ul>
+<li>-i: 询问是否要杀死某个进程</li>
+<li>-I: 忽略进程名的大小写</li>
+</ul>
+<h2 id="杀死进程命令pkill"><a href="#杀死进程命令pkill" class="headerlink" title="杀死进程命令pkill"></a>杀死进程命令pkill</h2><ul>
+<li>-t 终端号：按照终端号踢出用户<br><code>w</code> 查询本机已登录的用户<br><code>pkill -9 -t pts/1</code> 踢出pts/1终端 </li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/20/node_url/" rel="next" title="Node.js标准库学习之url">
+                <i class="fa fa-chevron-left"></i> Node.js标准库学习之url
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/21/node_module_schedule/" rel="prev" title="Node.js定时任务模块node-schedule">
+                Node.js定时任务模块node-schedule <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="LiuYao" />
+          <p class="site-author-name" itemprop="name">LiuYao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Stay hungry, stay foolish</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程查看命令ps"><span class="nav-number">2.</span> <span class="nav-text">进程查看命令ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程查看命令pstree"><span class="nav-number">3.</span> <span class="nav-text">进程查看命令pstree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程查看命令top"><span class="nav-number">4.</span> <span class="nav-text">进程查看命令top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程命令kill"><span class="nav-number">5.</span> <span class="nav-text">杀死进程命令kill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程命令killall"><span class="nav-number">6.</span> <span class="nav-text">杀死进程命令killall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程命令pkill"><span class="nav-number">7.</span> <span class="nav-text">杀死进程命令pkill</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuYao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

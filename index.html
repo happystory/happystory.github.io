@@ -87,12 +87,15 @@
 
 
 
+<meta name="description" content="Stay hungry, stay foolish">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="LiuYao's Notes">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="LiuYao's Notes">
+<meta property="og:description" content="Stay hungry, stay foolish">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="LiuYao's Notes">
+<meta name="twitter:description" content="Stay hungry, stay foolish">
 
 
 
@@ -126,7 +129,7 @@
 
 
 
-  <title> Hexo </title>
+  <title> LiuYao's Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -164,12 +167,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">LiuYao's Notes</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <p class="site-subtitle">Quick notes</p>
       
   </div>
 
@@ -257,16 +260,16 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/21/node_module_schedule/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘尧">
+      <meta itemprop="name" content="LiuYao">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="LiuYao's Notes">
     </span>
 
     
@@ -279,8 +282,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/03/20/test/" itemprop="url">
-                  test
+                <a class="post-title-link" href="/2017/03/21/node_module_schedule/" itemprop="url">
+                  Node.js定时任务模块node-schedule
                 </a>
               
             
@@ -296,7 +299,132 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T11:50:41+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-21T15:06:00+08:00">
+                2017-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install node-schedule</div></pre></td></tr></table></figure>
+<h2 id="Crol-style-定时任务"><a href="#Crol-style-定时任务" class="headerlink" title="Crol-style 定时任务"></a>Crol-style 定时任务</h2><p>格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">*    *    *    *    *    *</div><div class="line">┬    ┬    ┬    ┬    ┬    ┬</div><div class="line">│    │    │    │    │    |</div><div class="line">│    │    │    │    │    └ 星期几 (0 - 7) (0 或 7 是星期日)</div><div class="line">│    │    │    │    └───── 月 (1 - 12)</div><div class="line">│    │    │    └────────── 日 (1 - 31)</div><div class="line">│    │    └─────────────── 时 (0 - 23)</div><div class="line">│    └──────────────────── 分 (0 - 59)</div><div class="line">└───────────────────────── 秒 (0 - 59, 可选)</div></pre></td></tr></table></figure></p>
+<p>比如期望时间秒数为30的时候执行某个任务，可以这样写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> schedule = <span class="built_in">require</span>(<span class="string">'node-schedule'</span>);</div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(<span class="string">'30 * * * * *'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">   <span class="built_in">console</span>.log(<span class="string">'现在秒针指向30'</span>); </div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="Date-based-定时任务"><a href="#Date-based-定时任务" class="headerlink" title="Date-based 定时任务"></a>Date-based 定时任务</h2><p>假设期望在某一具体时间点执行某个任务:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> schedule = <span class="built_in">require</span>(<span class="string">'node-schedule'</span>);</div><div class="line"><span class="keyword">var</span> moment = <span class="built_in">require</span>(<span class="string">'moment'</span>);</div><div class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2017</span>, <span class="number">2</span>, <span class="number">21</span>, <span class="number">15</span>, <span class="number">39</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(date, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 2017/03/21 15:39:00</span></div><div class="line">    <span class="built_in">console</span>.log(moment().format(<span class="string">'YYYY/MM/DD HH:mm:ss'</span>));</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 取消任务</span></div><div class="line"><span class="comment">// j.cancel();</span></div></pre></td></tr></table></figure></p>
+<h2 id="Recurrence-Rule-定时任务"><a href="#Recurrence-Rule-定时任务" class="headerlink" title="Recurrence Rule 定时任务"></a>Recurrence Rule 定时任务</h2><p>假设期望时间符合某个条件时执行某个任务:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rule = <span class="keyword">new</span> schedule.RecurrenceRule();</div><div class="line">rule.dayOfWeek = [<span class="keyword">new</span> schedule.Range(<span class="number">1</span>, <span class="number">5</span>)];</div><div class="line">rule.hour = <span class="number">8</span>;</div><div class="line">rule.minute = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="comment">// 对象写法</span></div><div class="line"><span class="comment">// var rule = &#123;</span></div><div class="line"><span class="comment">//     dayOfWeek: [new schedule.Range(1, 5)],</span></div><div class="line"><span class="comment">//     hour: 8,</span></div><div class="line"><span class="comment">//     minute: 0</span></div><div class="line"><span class="comment">// &#125;;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(rule, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"It's time to go to work!"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/linux_process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuYao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuYao's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/20/linux_process/" itemprop="url">
+                  Linux学习之进程管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T20:09:29+08:00">
                 2017-03-20
               </time>
             
@@ -334,16 +462,296 @@
       
         
           
-            <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.</p>
-<p>Quick Start</p>
-<p>Create a new post</p>
-<p>1<br>$ hexo new “My New Post”<br>More info: Writing</p>
-<p>Run server</p>
-<p>1<br>$ hexo server<br>More info: Server</p>
-<p>Generate static files</p>
-<p>1<br>$ hexo generate<br>More info: Generating</p>
-<p>Deploy to remote sites</p>
-<p>1<br>$ hexo deploy<br>More info: Deployment</p>
+            <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>进程是正在执行的一个程序或命令，每个进程都是一个运行的实体，都有自己的地址空间，并占用一定的系统资源。<br>主要作用：判断系统是否健康；查看进程；杀死进程。</p>
+<h2 id="进程查看命令ps"><a href="#进程查看命令ps" class="headerlink" title="进程查看命令ps"></a>进程查看命令ps</h2><ul>
+<li><code>ps aux</code> 查看系统中所有进程，使用BSD操作系统格式</li>
+<li><code>ps -le</code> 查看系统中所有进程，使用Linux标准命令格式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">USER: 该进程是由哪个用户产生的</div><div class="line">PID: 进程的ID号</div><div class="line">%CPU: 该进程占用CPU资源的百分比</div><div class="line">%MEM: 该进程占用物理内存的百分比</div><div class="line">VSZ: 该进程占用虚拟内存的大小，单位KB</div><div class="line">RSS: 该进程占用实际物理内存的大小，单位KB</div><div class="line">TTY: 该进程是在哪个终端运行的</div><div class="line">STAT: 进程状态</div><div class="line">    R: 运行</div><div class="line">    S: 休眠</div><div class="line">    T: 停止</div><div class="line">    s: 包含子进程</div><div class="line">    +: 位于后台</div><div class="line">START: 该进程的启动时间</div><div class="line">TIME: 该进程的CPU的运算时间</div><div class="line">COMMAND: 产生此进程的命令名</div></pre></td></tr></table></figure>
+<h2 id="进程查看命令pstree"><a href="#进程查看命令pstree" class="headerlink" title="进程查看命令pstree"></a>进程查看命令pstree</h2><ul>
+<li>-p: 显示进程的PID</li>
+<li>-u: 显示进程的所属用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# pstree</div><div class="line">init─┬─auditd───&#123;auditd&#125;</div><div class="line">     ├─crond</div><div class="line">     ├─dbus-daemon───&#123;dbus-daemon&#125;</div><div class="line">     ├─dhclient</div><div class="line">     ├─master─┬─pickup</div><div class="line">     │        └─qmgr</div><div class="line">     ├─6*[mingetty]</div><div class="line">     ├─mysqld_safe───mysqld───9*[&#123;mysqld&#125;]</div><div class="line">     ├─portreserve</div><div class="line">     ├─rsyslogd───3*[&#123;rsyslogd&#125;]</div><div class="line">     ├─sshd───sshd───bash───pstree</div><div class="line">     └─udevd───2*[udevd]</div></pre></td></tr></table></figure>
+<h2 id="进程查看命令top"><a href="#进程查看命令top" class="headerlink" title="进程查看命令top"></a>进程查看命令top</h2><ul>
+<li>-d 秒数：指定每隔几秒更新，默认是3秒</li>
+<li>-b: 使用批处理模式输出（一般与”-n”选项合用）</li>
+<li>-n 次数：指定命令执行的次数</li>
+</ul>
+<p>在top命令的交互模式当中可以执行的命令：</p>
+<ul>
+<li>?或h: 显示交互模式的帮助</li>
+<li>P: 以CPU使用率排序，默认就是此项</li>
+<li>M: 以内存的使用率排序</li>
+<li>N: 以PID排序</li>
+<li>q: 退出top</li>
+</ul>
+<h2 id="杀死进程命令kill"><a href="#杀死进程命令kill" class="headerlink" title="杀死进程命令kill"></a>杀死进程命令kill</h2><p><code>kill -l</code> 查看信号</p>
+<ul>
+<li>kill -1(-HUP) <pid> 平滑重启</pid></li>
+<li>kill -9 <pid> 强制中止</pid></li>
+<li>kill -15 <pid> 默认</pid></li>
+</ul>
+<h2 id="杀死进程命令killall"><a href="#杀死进程命令killall" class="headerlink" title="杀死进程命令killall"></a>杀死进程命令killall</h2><p>killall [选项][信号]进程名</p>
+<ul>
+<li>-i: 询问是否要杀死某个进程</li>
+<li>-I: 忽略进程名的大小写</li>
+</ul>
+<h2 id="杀死进程命令pkill"><a href="#杀死进程命令pkill" class="headerlink" title="杀死进程命令pkill"></a>杀死进程命令pkill</h2><ul>
+<li>-t 终端号：按照终端号踢出用户<br><code>w</code> 查询本机已登录的用户<br><code>pkill -9 -t pts/1</code> 踢出pts/1终端 </li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/node_url/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuYao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuYao's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/20/node_url/" itemprop="url">
+                  Node.js标准库学习之url
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T17:30:07+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="url"><a href="#url" class="headerlink" title="url"></a>url</h1><p><code>url</code>模块用于URL处理与解析。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</div></pre></td></tr></table></figure></p>
+<h2 id="url-parse-urlString-parseQueryString-slashesDenoteHost"><a href="#url-parse-urlString-parseQueryString-slashesDenoteHost" class="headerlink" title="url.parse(urlString[, parseQueryString[, slashesDenoteHost]])"></a>url.parse(urlString[, parseQueryString[, slashesDenoteHost]])</h2><p>parseQueryString <boolean> 如果为 true，则 query 属性总会通过 querystring 模块的 parse() 方法生成一个对象。 默认为 false。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&gt; url.parse(&apos;http://user:pass@host.com:8080/p/a/t/h?query=string#hash&apos;)</div><div class="line">Url &#123;</div><div class="line">  protocol: &apos;http:&apos;,</div><div class="line">  slashes: true,</div><div class="line">  auth: &apos;user:pass&apos;,</div><div class="line">  host: &apos;host.com:8080&apos;,</div><div class="line">  port: &apos;8080&apos;,</div><div class="line">  hostname: &apos;host.com&apos;,</div><div class="line">  hash: &apos;#hash&apos;,</div><div class="line">  search: &apos;?query=string&apos;,</div><div class="line">  query: &apos;query=string&apos;,</div><div class="line">  pathname: &apos;/p/a/t/h&apos;,</div><div class="line">  path: &apos;/p/a/t/h?query=string&apos;,</div><div class="line">  href: &apos;http://user:pass@host.com:8080/p/a/t/h?query=string#hash&apos; &#125;</div><div class="line">  </div><div class="line">&gt; url.parse(&apos;http://user:pass@host.com:8080/p/a/t/h?query=string#hash&apos;, true)</div><div class="line">Url &#123;</div><div class="line">  protocol: &apos;http:&apos;,</div><div class="line">  slashes: true,</div><div class="line">  auth: &apos;user:pass&apos;,</div><div class="line">  host: &apos;host.com:8080&apos;,</div><div class="line">  port: &apos;8080&apos;,</div><div class="line">  hostname: &apos;host.com&apos;,</div><div class="line">  hash: &apos;#hash&apos;,</div><div class="line">  search: &apos;?query=string&apos;,</div><div class="line">  query: &#123; query: &apos;string&apos; &#125;,  // 已解析</div><div class="line">  pathname: &apos;/p/a/t/h&apos;,</div><div class="line">  path: &apos;/p/a/t/h?query=string&apos;,</div><div class="line">  href: &apos;http://user:pass@host.com:8080/p/a/t/h?query=string#hash&apos; &#125;</div></pre></td></tr></table></figure></boolean></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/node_querystring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuYao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuYao's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/20/node_querystring/" itemprop="url">
+                  Node.js标准库学习之querystring
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T17:30:06+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="querystring-查询字符串"><a href="#querystring-查询字符串" class="headerlink" title="querystring(查询字符串)"></a>querystring(查询字符串)</h1><p><code>querystring</code> 用于解析与格式化 URL 查询字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</div></pre></td></tr></table></figure>
+<h2 id="querystring-escape-str"><a href="#querystring-escape-str" class="headerlink" title="querystring.escape(str)"></a>querystring.escape(str)</h2><p>querystring.escape() 方法对给定字符串执行 URL 百分号编码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(querystring.escape(<span class="string">'中文'</span>));  <span class="comment">// %E4%B8%AD%E6%96%87</span></div></pre></td></tr></table></figure>
+<h2 id="querystring-parse-str-sep-eq-options"><a href="#querystring-parse-str-sep-eq-options" class="headerlink" title="querystring.parse(str[, sep[, eq[, options]]])"></a>querystring.parse(str[, sep[, eq[, options]]])</h2><ul>
+<li>sep <code>&lt;String&gt;</code> 用于界定查询字符串中的键值对的子字符串。默认为 ‘&amp;’。</li>
+<li>eq <code>&lt;String&gt;</code> 用于界定查询字符串中的键与值的子字符串。默认为 ‘=’。</li>
+<li>options <code>&lt;Object&gt;</code><br>decodeURIComponent <function> 当解码查询字符串中百分号编码的字符时使用的函数。默认为 querystring.unescape()。<br>maxKeys <number> 指定要解析的键的最大数量。默认为 1000。指定为 0 则移除键数的限制。</number></function></li>
+</ul>
+<p>配合url模块，可以很方便地解析查询字符串，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</div><div class="line"><span class="keyword">const</span> urlObj = url.parse(<span class="string">'https://www.baidu.com/s?id=UTF-8&amp;wd=node'</span>);</div><div class="line"><span class="built_in">console</span>.log(querystring.parse(urlObj.query)); <span class="comment">// &#123; id: 'UTF-8', wd: 'node' &#125;</span></div></pre></td></tr></table></figure></p>
 
           
         
@@ -411,11 +819,11 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="刘尧" />
-          <p class="site-author-name" itemprop="name">刘尧</p>
+               src="/uploads/avatar.jpg"
+               alt="LiuYao" />
+          <p class="site-author-name" itemprop="name">LiuYao</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry, stay foolish</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -423,7 +831,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -436,7 +844,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -482,7 +890,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">刘尧</span>
+  <span class="author" itemprop="copyrightHolder">LiuYao</span>
 </div>
 
 
