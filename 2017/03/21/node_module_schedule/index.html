@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Node.js," />
+  <meta name="keywords" content="Node.js,node第三方模块," />
 
 
 
@@ -95,7 +95,7 @@ Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    
 <meta property="og:site_name" content="LiuYao's Notes">
 <meta property="og:description" content="安装1npm install node-schedule
 Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    ┬    ┬    ┬    ┬    ┬│    │    │    │    │    |│    │    │    │    │    └ 星期几 (0 - 7) (0 或 7 是星期日)│    │    │">
-<meta property="og:updated_time" content="2017-03-21T07:53:17.136Z">
+<meta property="og:updated_time" content="2017-03-21T08:12:36.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js定时任务模块node-schedule">
 <meta name="twitter:description" content="安装1npm install node-schedule
@@ -309,6 +309,28 @@ Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -336,6 +358,7 @@ Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    
       
         <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install node-schedule</div></pre></td></tr></table></figure>
 <h2 id="Crol-style-定时任务"><a href="#Crol-style-定时任务" class="headerlink" title="Crol-style 定时任务"></a>Crol-style 定时任务</h2><p>格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">*    *    *    *    *    *</div><div class="line">┬    ┬    ┬    ┬    ┬    ┬</div><div class="line">│    │    │    │    │    |</div><div class="line">│    │    │    │    │    └ 星期几 (0 - 7) (0 或 7 是星期日)</div><div class="line">│    │    │    │    └───── 月 (1 - 12)</div><div class="line">│    │    │    └────────── 日 (1 - 31)</div><div class="line">│    │    └─────────────── 时 (0 - 23)</div><div class="line">│    └──────────────────── 分 (0 - 59)</div><div class="line">└───────────────────────── 秒 (0 - 59, 可选)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>比如期望时间秒数为30的时候执行某个任务，可以这样写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> schedule = <span class="built_in">require</span>(<span class="string">'node-schedule'</span>);</div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(<span class="string">'30 * * * * *'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">   <span class="built_in">console</span>.log(<span class="string">'现在秒针指向30'</span>); </div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <h2 id="Date-based-定时任务"><a href="#Date-based-定时任务" class="headerlink" title="Date-based 定时任务"></a>Date-based 定时任务</h2><p>假设期望在某一具体时间点执行某个任务:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> schedule = <span class="built_in">require</span>(<span class="string">'node-schedule'</span>);</div><div class="line"><span class="keyword">var</span> moment = <span class="built_in">require</span>(<span class="string">'moment'</span>);</div><div class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2017</span>, <span class="number">2</span>, <span class="number">21</span>, <span class="number">15</span>, <span class="number">39</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(date, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 2017/03/21 15:39:00</span></div><div class="line">    <span class="built_in">console</span>.log(moment().format(<span class="string">'YYYY/MM/DD HH:mm:ss'</span>));</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 取消任务</span></div><div class="line"><span class="comment">// j.cancel();</span></div></pre></td></tr></table></figure></p>
 <h2 id="Recurrence-Rule-定时任务"><a href="#Recurrence-Rule-定时任务" class="headerlink" title="Recurrence Rule 定时任务"></a>Recurrence Rule 定时任务</h2><p>假设期望时间符合某个条件时执行某个任务:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rule = <span class="keyword">new</span> schedule.RecurrenceRule();</div><div class="line">rule.dayOfWeek = [<span class="keyword">new</span> schedule.Range(<span class="number">1</span>, <span class="number">5</span>)];</div><div class="line">rule.hour = <span class="number">8</span>;</div><div class="line">rule.minute = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="comment">// 对象写法</span></div><div class="line"><span class="comment">// var rule = &#123;</span></div><div class="line"><span class="comment">//     dayOfWeek: [new schedule.Range(1, 5)],</span></div><div class="line"><span class="comment">//     hour: 8,</span></div><div class="line"><span class="comment">//     minute: 0</span></div><div class="line"><span class="comment">// &#125;;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> j = schedule.scheduleJob(rule, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"It's time to go to work!"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
@@ -369,6 +392,8 @@ Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    
         <div class="post-tags">
           
             <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/node第三方模块/" rel="tag"># node第三方模块</a>
           
         </div>
       
@@ -468,15 +493,24 @@ Crol-style 定时任务格式如下：123456789*    *    *    *    *    *┬    
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
           
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
-              
+              </a>
             </div>
           
 
