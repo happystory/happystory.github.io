@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>表单demo</title>
+</head>
+<body>
+  <form action="" method="get">
+    <div class="form-item">
+      <label for="username">姓名：</label>
+      <input type="text" id="username" name="username" placeholder="用户名">
+    </div>
+    <div class="form-item">
+      <label for="password">密码：</label>
+      <input type="password" id="password" name="password" placeholder="密码">
+    </div>
+    <div class="form-item">
+      <label>性别：</label>
+      <input type="radio" name="interest" id="male" value="male" />
+      <label for="male">男</label>
+      <input type="radio" name="interest" id="female" value="female"  />
+      <label for="female">女</label>
+    </div>
+    <div class="form-item">
+      <label>取向：</label>
+      <input type="radio" name="interest" id="male" value="male" />
+      <label for="male">男</label>
+      <input type="radio" name="interest" id="female" value="female"  />
+      <label for="female">女</label>
+    </div>
+    <div class="form-item">
+      <label>爱好：</label>
+      <input type="checkbox" name="hobby" id="dota" value="dota" />
+      <label for="dota">dota</label>
+      <input type="checkbox" name="hobby" id="trip" value="trip" />
+      <label for="trip">旅游</label>
+      <input type="checkbox" name="hobby" id="pet" value="pet" />
+      <label for="pet">宠物</label>
+    </div>
+    <div class="form-item">
+      <label for="comment">评论：</label>
+      <textarea name="comment" id="comment" cols="30" rows="10" placeholder="请在此写下您的评论..."></textarea>
+    </div>
+    <div class="form-item">
+      <label for="car">我的car：</label>
+      <select name="car" id="car">
+        <option value="sabo">萨博</option>
+        <option value="bentian">本田</option>
+        <option value="bmw">宝马</option>
+      </select>
+    </div>
+    <div>
+      <input type="submit" value="提交">
+    </div>
+  </form>
+</body>
+</html>
